@@ -5,6 +5,7 @@
 
 
 # Components
+- Use always unique name for a Component function
 
 <br><br>
 
