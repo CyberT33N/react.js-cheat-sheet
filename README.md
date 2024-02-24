@@ -4,6 +4,9 @@
 # Guides
 - https://www.w3schools.com/react/react_components.asp
 
+# Extensions
+- https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en&pli=1
+
 
 # Components
 - Use always unique name for a Component function
