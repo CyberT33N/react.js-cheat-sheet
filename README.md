@@ -8,6 +8,65 @@
 - https://chromewebstore.google.com/detail/react-developer-tools/fmkadmapgofadopljbjfkapdkoienihi?hl=en&pli=1
 
 
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+# Templates
+
+## List
+- https://github.com/brillout/awesome-react-components
+
+
+## UI Library
+
+### nextui **hot**
+- https://nextui.org
+
+### tailwindui
+- https://tailwindui.com/components
+
+## MUI **hot**
+- https://mui.com/material-ui/getting-started/usage/
+
+### ant 
+- https://ant.design/components/overview/
+
+### chakra ui
+- https://v2.chakra-ui.com/docs/components/container
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+
+
 # Components
 - Use always unique name for a Component function
 
