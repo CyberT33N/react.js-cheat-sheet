@@ -142,6 +142,7 @@ ________________________________
 <br><br>
 
 ### SWR
+- **Not recommended when your data is changing each request**
 - https://swr.vercel.app/docs/arguments
 ```javascript
 import React from 'react'
