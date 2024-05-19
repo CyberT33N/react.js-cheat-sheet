@@ -137,6 +137,7 @@ ________________________________
 <br><br>
 
 ## Data Fetching
+- Because of CORS you can only make request to the same domain
 
 <br><br>
 
