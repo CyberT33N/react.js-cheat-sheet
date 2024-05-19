@@ -143,21 +143,20 @@ ________________________________
 
 ### SWR
 - **Not recommended when your data is changing each request**
-- https://swr.vercel.app/docs/arguments
+- [https://swr.vercel.app/docs/arguments](https://swr.vercel.app/)
 ```javascript
 import React from 'react'
 import useSWR from 'swr'
-import {
-  // ... other imports from nextui-org
-}
 
-const Fetch = async () => {
-  const response = await fetch('https://your-api-endpoint'); // Replace with your actual endpoint
+const Fetch = async url => {
+  const response = await fetch(url)
+
   if (!response.ok) {
-    throw new Error('Failed to fetch data');
+    throw new Error('Failed to fetch data')
   }
-  return await response.json();
-};
+
+  return await response.json()
+}
 
 export function NewCoinsGrid() {
   const { data, error } = useSWR('your-api-endpoint-key', Fetch);
@@ -166,53 +165,56 @@ export function NewCoinsGrid() {
   if (error) return <div>Error fetching data: {error.message}</div>;
   if (!data) return <div>Loading...</div>;
 
-  // Access fetched data using data.columns, data.coins, data.statusOptions
-  const { columns, coins, statusOptions } = data;
-
-  // ... rest of your component logic using columns, coins, and statusOptions
+   return (
+     //... Your final render..
+    )
 }
 ```
 
 
 ### useEffect()
+- We use useState() to define an empty array for the first init
+  - setColumns() is the function which will be used after the request to our API is down to define the value of columns
+    - headerColumns will work with columns and the get rendered successfully when setColumns(columns) was called
 ```javascript
-import React, { useState, useEffect } from 'react'
-import {
-  // ... other imports from nextui-org
-}
-
-const Fetch = async () => {
-  const response = await fetch('https://your-api-endpoint'); // Replace with your actual endpoint
-  if (!response.ok) {
-    throw new Error('Failed to fetch data');
-  }
-  return await response.json();
-};
+import { useState, useRef, useEffect } from 'react'
+import axios from 'axios'
 
 export function NewCoinsGrid() {
-  const [data, setData] = useState([]); // State to store fetched data
-  const [error, setError] = useState(null); // State to handle errors
+    const [columns, setColumns] = useState([])
+    const [error, setError] = useState(null)
+    const [isLoading, setIsLoading] = useState(true)
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await Fetch();
-        setData(response.data.pairs);
-      } catch (err) {
-        setError(err.message);
-      }
-    };
+    useEffect(() => {
+        const fetchCoins = async() => {
+            try {
+                const res = await axios.get('/api/coins/discover/new')
+                const { columns } = res.data
+                setColumns(columns)
+                setIsLoading(false)
+            } catch (e) {
+                setError(e.message)
+            }
+        }
 
-    fetchData();
-  }, []); // Run the effect only once on component mount
+        fetchCoins()
+    }, [])
 
-  // Handle loading state and errors here (optional)
-  if (error) return <div>Error fetching data: {error}</div>;
-  if (!data.length) return <div>Loading...</div>;
+    const headerColumns = React.useMemo(() => {
+        if (visibleColumns === 'all') return columns
+        return columns.filter((column: any) => Array.from(visibleColumns).includes(column.uid))
+    }, [visibleColumns, columns])
 
-  // Access fetched data using data
-  const { columns, coins, statusOptions } = data;
+    if (isLoading) {
+        return <div>Loading...</div> // Zeigen Sie eine Loading-Nachricht an, während die Daten geladen werden
+    }
 
-  // ... rest of your component logic using columns, coins, and statusOptions
+    if (error) {
+        return <div>Error: {error}</div>
+    }
+
+    return (
+     //... Your final render..
+    )
 }
 ```
