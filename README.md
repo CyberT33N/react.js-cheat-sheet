@@ -111,3 +111,62 @@ function Garage() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Garage />);
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+# Client components
+
+<br><br>
+
+## Data Fetching
+
+<br><br>
+
+### SWR
+- https://swr.vercel.app/docs/arguments
+```javascript
+import React from 'react'
+import useSWR from 'swr'
+import {
+  // ... other imports from nextui-org
+}
+
+const Fetch = async () => {
+  const response = await fetch('https://your-api-endpoint'); // Replace with your actual endpoint
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return await response.json();
+};
+
+export function NewCoinsGrid() {
+  const { data, error } = useSWR('your-api-endpoint-key', Fetch);
+
+  // Handle loading state and errors here (optional)
+  if (error) return <div>Error fetching data: {error.message}</div>;
+  if (!data) return <div>Loading...</div>;
+
+  // Access fetched data using data.columns, data.coins, data.statusOptions
+  const { columns, coins, statusOptions } = data;
+
+  // ... rest of your component logic using columns, coins, and statusOptions
+}
+```
