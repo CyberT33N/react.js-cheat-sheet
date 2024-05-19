@@ -170,3 +170,47 @@ export function NewCoinsGrid() {
   // ... rest of your component logic using columns, coins, and statusOptions
 }
 ```
+
+
+### useEffect()
+```javascript
+import React, { useState, useEffect } from 'react'
+import {
+  // ... other imports from nextui-org
+}
+
+const Fetch = async () => {
+  const response = await fetch('https://your-api-endpoint'); // Replace with your actual endpoint
+  if (!response.ok) {
+    throw new Error('Failed to fetch data');
+  }
+  return await response.json();
+};
+
+export function NewCoinsGrid() {
+  const [data, setData] = useState([]); // State to store fetched data
+  const [error, setError] = useState(null); // State to handle errors
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await Fetch();
+        setData(response.data.pairs);
+      } catch (err) {
+        setError(err.message);
+      }
+    };
+
+    fetchData();
+  }, []); // Run the effect only once on component mount
+
+  // Handle loading state and errors here (optional)
+  if (error) return <div>Error fetching data: {error}</div>;
+  if (!data.length) return <div>Loading...</div>;
+
+  // Access fetched data using data
+  const { columns, coins, statusOptions } = data;
+
+  // ... rest of your component logic using columns, coins, and statusOptions
+}
+```
