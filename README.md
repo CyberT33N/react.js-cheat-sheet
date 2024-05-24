@@ -123,6 +123,31 @@ root.render(<Garage />);
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ________________________________
@@ -132,16 +157,14 @@ ________________________________
 <br><br>
 
 
-# Client components
 
-<br><br>
 
-## Data Fetching
+# Data Fetching
 - Because of CORS you can only make request to the same domain
 
 <br><br>
 
-### SWR
+## SWR
 - **Not recommended when your data is changing each request**
 - [https://swr.vercel.app/docs/arguments](https://swr.vercel.app/)
 ```javascript
@@ -171,8 +194,10 @@ export function NewCoinsGrid() {
 }
 ```
 
+<br><br>
+<br><br>
 
-### useEffect()
+## useEffect()
 - We use useState() to define an empty array for the first init
   - setColumns() is the function which will be used after the request to our API is down to define the value of columns
     - headerColumns will work with columns and the get rendered successfully when setColumns(columns) was called
@@ -216,5 +241,36 @@ export function NewCoinsGrid() {
     return (
      //... Your final render..
     )
+}
+```
+
+<br><br>
+<br><br>
+
+### Create interval
+```
+export async function GET() {
+    const [data, setData] = useState(null);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const result = await Fetch();
+            setData(result);
+        };
+
+        fetchData(); // initialer Aufruf
+
+        const interval = setInterval(() => {
+            fetchData(); // Aufruf alle 5 Sekunden
+        }, 5000);
+
+        return () => clearInterval(interval); // Aufräumen beim unmounten
+    }, []);
+
+    if (!data) {
+        return null; // Ladezustand handhaben
+    }
+
+    return Response.json(data);
 }
 ```
