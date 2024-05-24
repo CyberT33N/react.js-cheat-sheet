@@ -56,6 +56,16 @@ ________________________________
 
 
 
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ________________________________
@@ -111,6 +121,26 @@ function Garage() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(<Garage />);
 ```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -273,4 +303,77 @@ export async function GET() {
 
     return Response.json(data);
 }
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+
+# Hooks
+
+<br><br>
+
+## useMemo
+
+<br><br>
+
+### Update Value
+- Make sure that the data that has to been updated is to the second arg array
+```
+const [lastUpdated, setLastUpdated] = useState(Date.now())
+
+
+useEffect(() => {
+    const interval = setInterval(() => {
+        setLastUpdated(Date.now())
+    }, 1000)
+
+    return () => clearInterval(interval)
+}, [])
+
+
+const bottomContent = React.useMemo(() => {
+    return (
+            <div className="hidden sm:flex w-[30%] justify-end gap-2">
+                <p>Last updated: {
+                    Math.floor((Date.now() - lastUpdated) / 1000)} seconds ago ({
+                    new Date().toLocaleTimeString()
+                })</p>
+            </div>
+        </div>
+    )
+}, [lastUpdated)
 ```
