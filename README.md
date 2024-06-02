@@ -344,15 +344,41 @@ ________________________________
 
 # Hooks
 
+
+<br><br>
+<br><br>
+
+
+## useCallback
+- useCallback is a React Hook that lets you cache a function definition between re-renders.
+- https://react.dev/reference/react/useCallback
+```typescript
+import { useCallback } from 'react';
+
+export default function ProductPage({ productId, referrer, theme }) {
+  const handleSubmit = useCallback((orderDetails) => {
+    post('/product/' + productId + '/buy', {
+      referrer,
+      orderDetails,
+    });
+  }, [productId, referrer]);
+```
+- If you want to setState inside then pass the variable to the array callback
+
+
+
+
 <br><br>
 
 ## useMemo
+- https://react.dev/reference/react/useMemo
+- useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
 
 <br><br>
 
 ### Update Value
 - Make sure that the data that has to been updated is to the second arg array
-```
+```typescript
 const [lastUpdated, setLastUpdated] = useState(Date.now())
 
 
