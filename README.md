@@ -76,6 +76,97 @@ ________________________________
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+
+
+# main.tsx
+- Ja, das ist tatsächlich der Standard-Ansatz in modernen React-Anwendungen, besonders wenn sie mit Build-Tools wie Vite oder Create React App erstellt wurden. Lass uns die wichtigsten Punkte durchgehen:
+
+Standard-Struktur:
+- Eine index.html mit einem Root-Element (<div id="root"></div>)
+- Eine Haupt-TypeScript/JavaScript-Datei (traditionell index.tsx/index.js oder main.tsx/main.js), die als Einstiegspunkt dient
+- Der Import dieser Datei in der index.html
+  
+Warum dieser Ansatz?:
+- Saubere Trennung zwischen HTML-Grundgerüst und React-Anwendung
+- Ermöglicht Client-Side-Rendering (CSR)
+- Erlaubt das Bundling und Optimieren des JavaScript-Codes
+- Ist kompatibel mit modernen Build-Tools und Hot Module Replacement (HMR)
+  
+Unterschiede in Namenskonventionen:
+- Create React App verwendet traditionell index.js/index.tsx
+- Vite (wie in deinem Projekt) verwendet standardmäßig main.js/main.tsx
+- Die Funktionalität ist aber die gleiche
+  
+Der einzige Unterschied in deinem Setup zu anderen React-Projekten ist der Dateiname (main.tsx statt index.tsx), aber das ist nur eine Namenskonvention und ändert nichts an der Funktionsweise.
+Diese Struktur ist bewährt und wird von der React-Community weitgehend als Best Practice angesehen.
+
+index.html
+```html
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kanban-Board</title>
+    <meta name="description" content="This is a example of kanban board" />
+    <meta name="author" content="CyberT33N" />
+  </head>
+
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+```
+
+main.tsx
+```typescript
+import { createRoot } from 'react-dom/client'
+import App from './App.tsx'
+import './index.css'
+
+createRoot(document.getElementById("root")!).render(<App />);
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ________________________________
