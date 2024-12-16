@@ -28,11 +28,21 @@ ________________________________
 
 # Templates
 
+<br><br>
+
 ## List
 - https://github.com/brillout/awesome-react-components
 
 
+
+
+<br><br>
+<br><br>
+
 ## UI Library
+
+### shadcn
+- https://ui.shadcn.com/docs/installation/vite
 
 ### nextui **hot**
 - https://nextui.org
