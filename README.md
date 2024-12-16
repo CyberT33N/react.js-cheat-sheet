@@ -637,7 +637,96 @@ ________________________________
 
 
 
+## Toaster
 
+### Sonner
+- https://sonner.emilkowal.ski/
+
+<details><summary>Click to expand..</summary>
+
+@/components/ui/sonner
+```typescript
+import { useTheme } from "next-themes"
+import { Toaster as Sonner } from "sonner"
+
+type ToasterProps = React.ComponentProps<typeof Sonner>
+
+const Toaster = ({ ...props }: ToasterProps) => {
+  const { theme = "system" } = useTheme()
+
+  return (
+    <Sonner
+      theme={theme as ToasterProps["theme"]}
+      className="toaster group"
+      toastOptions={{
+        classNames: {
+          toast:
+            "group toast group-[.toaster]:bg-background group-[.toaster]:text-foreground group-[.toaster]:border-border group-[.toaster]:shadow-lg",
+          description: "group-[.toast]:text-muted-foreground",
+          actionButton:
+            "group-[.toast]:bg-primary group-[.toast]:text-primary-foreground",
+          cancelButton:
+            "group-[.toast]:bg-muted group-[.toast]:text-muted-foreground",
+        },
+      }}
+      {...props}
+    />
+  )
+}
+
+export { Toaster }
+```
+
+App.tsx
+```
+// Theme und UI Komponenten Imports
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+// React Query für Datenmanagement
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+// Routing Komponenten
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Seiten Import
+import Index from "./pages/Index";
+
+// Erstelle eine neue Query Client Instanz für React Query
+const queryClient = new QueryClient();
+
+// Haupt App Komponente
+const App = () => (
+  // Theme Provider: Verwaltet das Farbschema der App (hell/dunkel)
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    {/* Query Client Provider: Ermöglicht Datenabrufe und Caching in der gesamten App */}
+    <QueryClientProvider client={queryClient}>
+      {/* Tooltip Provider: Stellt Tooltip-Funktionalität bereit */}
+      <TooltipProvider>
+        {/* Toast Benachrichtigungskomponenten für Feedback */}
+        <Toaster />
+        <Sonner />
+        {/* Router Setup für Seitennavigation */}
+        <BrowserRouter>
+          <Routes>
+            {/* Definiere die Hauptroute "/" */}
+            <Route path="/" element={<Index />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
+);
+
+export default App;
+```
+
+</details>
+
+
+  
 
 <br><br>
 <br><br>
@@ -648,6 +737,8 @@ ________________________________
 
 ### Radix UI - Tooltip
 - https://www.radix-ui.com/primitives/docs/components/tooltip
+
+<details><summary>Click to expand..</summary>
 
 @/components/ui/tooltip
 ```typescript
@@ -712,3 +803,5 @@ const App = () => (
 
 export default App;
 ```
+
+</details>
