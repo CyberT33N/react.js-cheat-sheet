@@ -320,7 +320,7 @@ const { data, isLoading } = useQuery({
 });
 ```
 
-</details>
+
 
 
 Hauptvorteile
@@ -331,6 +331,27 @@ Hauptvorteile
 - Parallele und abhängige Abfragen
 - Optimistische UI-Updates
 - Der QueryClientProvider macht all diese Funktionen in der gesamten Anwendung verfügbar, indem er in der App.tsx eingebunden wird.
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
