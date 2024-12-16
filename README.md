@@ -175,6 +175,51 @@ ________________________________
 # App.tsx
 
 
+# React Router Komponenten Erklärung
+
+<details><summary>Click to expand..</summary>
+
+# Hauptkomponenten
+
+## 1. BrowserRouter
+- Basis-Router-Komponente für Web-Anwendungen
+- Verwendet HTML5 History API für die URL-Manipulation
+- Ermöglicht clientseitiges Routing ohne Seiten-Neuladen
+- Muss die gesamte Routing-Logik umschließen
+
+## 2. Routes
+- Container für alle Route-Definitionen
+- Vergleicht alle Kind-Routes gleichzeitig
+- Wählt die beste übereinstimmende Route aus
+- Rendert nur die passende Route-Komponente
+
+## 3. Route
+- Definiert eine einzelne Route in der Anwendung
+- Wichtige Props:
+  - `path`: URL-Pfad (z.B. "/about")
+  - `element`: Komponente die gerendert wird
+
+# Beispielverwendung
+```tsx
+<BrowserRouter>
+  <Routes>
+    <Route path="/" element={<Home />} />
+    <Route path="/about" element={<About />} />
+    <Route path="/users/:id" element={<UserProfile />} />
+  </Routes>
+</BrowserRouter>
+```
+
+</details>
+
+
+
+
+
+
+
+
+
 
 <br><br>
 <br><br>
