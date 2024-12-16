@@ -161,6 +161,91 @@ createRoot(document.getElementById("root")!).render(<App />);
 
 
 
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+
+
+
+# App.tsx
+
+
+
+<br><br>
+<br><br>
+
+## QueryClientProvider in React Query
+
+<details><summary>Click to expand..</summary>
+  
+
+# Überblick
+Der `QueryClientProvider` ist ein essentieller Bestandteil von React Query (TanStack Query), einer Bibliothek für effizientes Datenmanagement in React-Anwendungen.
+
+# Hauptfunktionen
+
+## 1. Caching
+- Speichert Serverantworten zwischen
+- Vermeidet unnötige API-Aufrufe
+- Verbessert die Anwendungsperformance
+
+## 2. Automatische Aktualisierung
+- Hält Daten automatisch synchron
+- Managed Background-Updates
+- Stellt Datenaktualität sicher
+
+## 3. Statusverwaltung
+- Verwaltet Ladezustände
+- Handhabt Fehlerzustände
+- Bietet einfachen Zugriff auf Datenstatus
+
+## 4. Optimistische Updates
+- Ermöglicht UI-Updates vor Server-Antworten
+- Verbessert gefühlte Performanz
+- Bietet Fallback bei Fehlern
+
+# Implementation in der App
+
+```typescript
+const queryClient = new QueryClient();
+
+<QueryClientProvider client={queryClient}>
+  {/* Kind-Komponenten haben Zugriff auf React Query */}
+</QueryClientProvider>
+```
+
+Verwendungsbeispiel:
+```typescript
+// In einer Kind-Komponente:
+const { data, isLoading } = useQuery({
+  queryKey: ['todos'],
+  queryFn: () => fetch('/api/todos').then(res => res.json())
+});
+```
+
+</details>
+
+
+Hauptvorteile
+- Vereinfachtes API-Handling
+- Automatisches Caching
+- Retry-Mechanismen
+- Lade- und Fehlerstatusmanagement
+- Parallele und abhängige Abfragen
+- Optimistische UI-Updates
+- Der QueryClientProvider macht all diese Funktionen in der gesamten Anwendung verfügbar, indem er in der App.tsx eingebunden wird.
+
+
+
+
+
+
+
 
 
 
@@ -503,4 +588,127 @@ const bottomContent = React.useMemo(() => {
         </div>
     )
 }, [lastUpdated)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+________________________________
+________________________________
+
+<br><br>
+<br><br>
+
+# Third Party Components
+
+<br><br>
+
+## Component Libary
+- https://www.radix-ui.com/
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+
+## Tooltips
+
+### Radix UI - Tooltip
+- https://www.radix-ui.com/primitives/docs/components/tooltip
+
+@/components/ui/tooltip
+```typescript
+import * as React from "react"
+import * as TooltipPrimitive from "@radix-ui/react-tooltip"
+
+import { cn } from "@/lib/utils"
+
+const TooltipProvider = TooltipPrimitive.Provider
+
+const Tooltip = TooltipPrimitive.Root
+
+const TooltipTrigger = TooltipPrimitive.Trigger
+
+const TooltipContent = React.forwardRef<
+  React.ElementRef<typeof TooltipPrimitive.Content>,
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Content>
+>(({ className, sideOffset = 4, ...props }, ref) => (
+  <TooltipPrimitive.Content
+    ref={ref}
+    sideOffset={sideOffset}
+    className={cn(
+      "z-50 overflow-hidden rounded-md border bg-popover px-3 py-1.5 text-sm text-popover-foreground shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2",
+      className
+    )}
+    {...props}
+  />
+))
+TooltipContent.displayName = TooltipPrimitive.Content.displayName
+
+export { Tooltip, TooltipTrigger, TooltipContent, TooltipProvider }
+```
+
+
+App.tsx
+```typescript
+import { ThemeProvider } from "@/components/theme-provider"
+import { Toaster } from "@/components/ui/toaster";
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Index from "./pages/Index";
+
+const queryClient = new QueryClient();
+
+const App = () => (
+  <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+          </Routes>
+        </BrowserRouter>
+      </TooltipProvider>
+    </QueryClientProvider>
+  </ThemeProvider>
+);
+
+export default App;
 ```
