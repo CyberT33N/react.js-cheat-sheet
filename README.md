@@ -28,6 +28,8 @@ ________________________________
 
 # Templates
 
+
+
 <br><br>
 
 ## List
@@ -40,6 +42,8 @@ ________________________________
 <br><br>
 
 ## UI Library
+
+<details><summary>Click to expand..</summary>
 
 ### shadcn
 - https://ui.shadcn.com/docs/installation/vite
@@ -60,6 +64,7 @@ ________________________________
 - https://v2.chakra-ui.com/docs/components/container
 
 
+</details>
 
 
 
@@ -155,6 +160,29 @@ createRoot(document.getElementById("root")!).render(<App />);
 
 
 </details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -365,6 +393,13 @@ Hauptvorteile
 
 
 
+
+
+
+
+
+
+
 <br><br>
 <br><br>
 ________________________________
@@ -491,6 +526,8 @@ ________________________________
 # Data Fetching
 - Because of CORS you can only make request to the same domain
 
+<details><summary>Click to expand..</summary>
+
 <br><br>
 
 ## SWR
@@ -604,7 +641,7 @@ export async function GET() {
 }
 ```
 
-
+</details>
 
 
 
@@ -640,68 +677,325 @@ ________________________________
 <br><br>
 
 
+# React Hooks
 
-# Hooks
+<details><summary>Click to expand..</summary>
 
+  
+## useState
 
-<br><br>
-<br><br>
+- `useState` is a React Hook that lets you add state to functional components.
+- It returns an array with two values: the current state and a function to update it.
 
+### Example
+```typescript
+import { useState } from 'react';
+
+function Counter() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <button onClick={() => setCount(count + 1)}>
+      Count: {count}
+    </button>
+  );
+}
+```
+
+---
+
+## useEffect
+
+- `useEffect` is a React Hook that lets you perform side effects in your components.
+- It runs after the render and optionally cleans up after the effect.
+
+### Example
+```typescript
+import { useEffect } from 'react';
+
+function App() {
+  useEffect(() => {
+    console.log('Component mounted');
+    return () => console.log('Component unmounted');
+  }, []); // Empty dependency array: runs only on mount and unmount
+}
+```
+
+---
+
+## useContext
+
+- `useContext` lets you access values from React's Context API in your components.
+- You can avoid passing props down manually through many levels.
+
+### Example
+```typescript
+import { useContext } from 'react';
+import { ThemeContext } from './ThemeContext';
+
+function App() {
+  const theme = useContext(ThemeContext);
+  return <div style={{ background: theme.background }}>Hello!</div>;
+}
+```
+
+---
+
+## useReducer
+
+- `useReducer` is a React Hook that lets you manage complex state logic.
+- It is an alternative to `useState` when state transitions become complex.
+
+### Example
+```typescript
+import { useReducer } from 'react';
+
+function reducer(state, action) {
+  switch (action.type) {
+    case 'increment':
+      return { count: state.count + 1 };
+    case 'decrement':
+      return { count: state.count - 1 };
+    default:
+      throw new Error();
+  }
+}
+
+function Counter() {
+  const [state, dispatch] = useReducer(reducer, { count: 0 });
+
+  return (
+    <>
+      <button onClick={() => dispatch({ type: 'decrement' })}>-</button>
+      <span>{state.count}</span>
+      <button onClick={() => dispatch({ type: 'increment' })}>+</button>
+    </>
+  );
+}
+```
+
+---
 
 ## useCallback
-- useCallback is a React Hook that lets you cache a function definition between re-renders.
-- https://react.dev/reference/react/useCallback
+
+- `useCallback` caches a function between re-renders, preventing unnecessary re-creation.
+- It is useful when passing callbacks to child components.
+
+### Example
 ```typescript
 import { useCallback } from 'react';
 
-export default function ProductPage({ productId, referrer, theme }) {
-  const handleSubmit = useCallback((orderDetails) => {
-    post('/product/' + productId + '/buy', {
-      referrer,
-      orderDetails,
-    });
-  }, [productId, referrer]);
+function App({ productId }) {
+  const handleClick = useCallback(() => {
+    console.log('Product ID:', productId);
+  }, [productId]);
+
+  return <button onClick={handleClick}>Log Product ID</button>;
+}
 ```
-- If you want to setState inside then pass the variable to the array callback
 
-
-
-
-<br><br>
+---
 
 ## useMemo
-- https://react.dev/reference/react/useMemo
-- useMemo is a React Hook that lets you cache the result of a calculation between re-renders.
 
-<br><br>
+- `useMemo` caches the result of a computation between renders.
+- It is used to optimize performance by skipping expensive calculations.
 
-### Update Value
-- Make sure that the data that has to been updated is to the second arg array
+### Example
 ```typescript
-const [lastUpdated, setLastUpdated] = useState(Date.now())
+import { useMemo } from 'react';
 
+function App({ items }) {
+  const expensiveCalculation = useMemo(() => {
+    return items.reduce((sum, item) => sum + item.value, 0);
+  }, [items]);
 
-useEffect(() => {
-    const interval = setInterval(() => {
-        setLastUpdated(Date.now())
-    }, 1000)
-
-    return () => clearInterval(interval)
-}, [])
-
-
-const bottomContent = React.useMemo(() => {
-    return (
-            <div className="hidden sm:flex w-[30%] justify-end gap-2">
-                <p>Last updated: {
-                    Math.floor((Date.now() - lastUpdated) / 1000)} seconds ago ({
-                    new Date().toLocaleTimeString()
-                })</p>
-            </div>
-        </div>
-    )
-}, [lastUpdated)
+  return <div>Total: {expensiveCalculation}</div>;
+}
 ```
+
+---
+
+## useRef
+
+- `useRef` provides a mutable reference to a DOM element or a value that persists across renders.
+
+### Example
+```typescript
+import { useRef } from 'react';
+
+function App() {
+  const inputRef = useRef();
+
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
+  return (
+    <>
+      <input ref={inputRef} />
+      <button onClick={focusInput}>Focus Input</button>
+    </>
+  );
+}
+```
+
+---
+
+## useImperativeHandle
+
+- `useImperativeHandle` customizes the instance value exposed when using `React.forwardRef`.
+
+### Example
+```typescript
+import React, { useImperativeHandle, useRef, forwardRef } from 'react';
+
+const CustomInput = forwardRef((props, ref) => {
+  const inputRef = useRef();
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      inputRef.current.focus();
+    },
+  }));
+  return <input ref={inputRef} />;
+});
+
+function App() {
+  const ref = useRef();
+
+  return (
+    <>
+      <CustomInput ref={ref} />
+      <button onClick={() => ref.current.focus()}>Focus Input</button>
+    </>
+  );
+}
+```
+
+---
+
+## useLayoutEffect
+
+- `useLayoutEffect` runs synchronously after all DOM mutations but before the browser paints.
+- Use it for DOM measurements or mutations.
+
+### Example
+```typescript
+import { useLayoutEffect, useRef } from 'react';
+
+function App() {
+  const ref = useRef();
+
+  useLayoutEffect(() => {
+    console.log(ref.current.getBoundingClientRect());
+  }, []);
+
+  return <div ref={ref}>Hello</div>;
+}
+```
+
+---
+
+## useDebugValue
+
+- `useDebugValue` lets you display custom labels for hooks in React DevTools.
+
+### Example
+```typescript
+import { useDebugValue, useState } from 'react';
+
+function useCustomHook() {
+  const [value, setValue] = useState(0);
+  useDebugValue(value > 5 ? 'High' : 'Low');
+  return [value, setValue];
+}
+```
+
+---
+
+## useId
+
+- `useId` generates unique IDs for accessibility and server rendering.
+
+### Example
+```typescript
+import { useId } from 'react';
+
+function App() {
+  const id = useId();
+
+  return <label htmlFor={id}>Name: <input id={id} /></label>;
+}
+```
+
+---
+
+## useTransition
+
+- `useTransition` lets you mark updates as non-urgent and improve UI responsiveness.
+
+### Example
+```typescript
+import { useState, useTransition } from 'react';
+
+function App() {
+  const [isPending, startTransition] = useTransition();
+  const [count, setCount] = useState(0);
+
+  const handleClick = () => {
+    startTransition(() => {
+      setCount((c) => c + 1);
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={handleClick}>Increment</button>
+      {isPending ? 'Updating...' : count}
+    </div>
+  );
+}
+```
+
+---
+
+## useDeferredValue
+
+- `useDeferredValue` lets you delay updating a non-urgent state.
+
+### Example
+```typescript
+import { useState, useDeferredValue } from 'react';
+
+function App() {
+  const [value, setValue] = useState('');
+  const deferredValue = useDeferredValue(value);
+
+  return (
+    <>
+      <input onChange={(e) => setValue(e.target.value)} />
+      <p>Deferred: {deferredValue}</p>
+    </>
+  );
+}
+```
+
+
+</details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
