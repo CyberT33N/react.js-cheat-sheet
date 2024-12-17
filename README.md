@@ -1044,13 +1044,131 @@ ________________________________
 
 
 
+
+
+
+
+
+
+
+### Utilities
+
+<details><summary>Click to expand..</summary>
+
+
+# Slot
+
 <br><br>
 
-## Icon
+## @radix-ui/react-slot
+- https://www.radix-ui.com/primitives/docs/utilities/slot
+
+<details><summary>Click to expand..</summary>
+
+Der **`Slot`** von Radix UI ist ein nützliches Utility für React, das die **Weitergabe von Props** und die Flexibilität bei der Component-Composition verbessert. Es ermöglicht dir, die Child-Komponenten so einzuschleusen, dass sie automatisch **Props** und **ClassNames** von einem Elternelement erben.
+
+---
+
+## **Hauptzweck von `Slot`**
+
+1. **Prop-Weitergabe**  
+   Wenn du eine Komponente baust und möchtest, dass Child-Komponenten automatisch **Props wie `className`, `style` oder `id`** übernehmen, hilft der `Slot`.
+
+2. **Flexiblere Komposition**  
+   Es ermöglicht Entwicklern, mehrere Komponenten zusammenzufügen, ohne sich um übermäßige Prop-Boilerplate oder `className`-Konflikte zu kümmern.
+
+---
+
+## **Anwendungsfall**
+
+Ohne `Slot`:
+```tsx
+function Button({ children, className }: { children: React.ReactNode; className?: string }) {
+  return <button className={className}>{children}</button>;
+}
+
+function App() {
+  return (
+    <Button className="primary-button">
+      <span className="inner-text">Click me</span>
+    </Button>
+  );
+}
+```
+Hier wird die `className`-Prop nur an `<button>` weitergegeben, **nicht** an `<span>` (Child-Komponente).
+
+---
+
+Mit `Slot`:
+```tsx
+import { Slot } from '@radix-ui/react-slot';
+
+function Button({ children, className }: { children: React.ReactNode; className?: string }) {
+  return (
+    <button className={className}>
+      <Slot>{children}</Slot>
+    </button>
+  );
+}
+
+function App() {
+  return (
+    <Button className="primary-button">
+      <span className="inner-text">Click me</span>
+    </Button>
+  );
+}
+```
+
+**Ergebnis**:  
+Die `className`-Prop (`primary-button`) wird automatisch auch an `<span>` weitergegeben.
+
+---
+
+## **Vorteile**
+
+1. **Keine unnötige Prop-Duplizierung**: Du musst nicht manuell Props an alle Child-Komponenten übergeben. `Slot` übernimmt das für dich.  
+2. **Einfachere Composition**: Bessere Kontrolle und Wiederverwendbarkeit von Komponenten, z.B. in Design-Systemen.  
+3. **Flexibilität**: Du kannst beliebige Elemente als Child einschleusen, ohne die Implementierung der Parent-Komponente zu ändern.
+
+---
+
+## **Kurz gesagt**  
+Radix UI's `Slot` macht es dir leichter, Child-Komponenten automatisch mit Props zu versorgen, die eigentlich auf der Parent-Komponente liegen. Dadurch wird die Component-Komposition eleganter und der Code sauberer. Ideal für flexible Design-Systeme und komplexe UI-Strukturen. 🚀
+
+</details>details>
+
+  
+</details>details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
+
+
+### Components 
+
+<details><summary>Click to expand..</summary>
 
 <br><br>
 
-## lucide-react
+# Icon
+
+<br><br>
+
+# lucide-react
 - https://lucide.dev/guide/packages/lucide-react
 
 
@@ -1066,11 +1184,11 @@ ________________________________
 <br><br>
 <br><br>
 
-## Drag and Drop
+# Drag and Drop
 
 <br><br>
 
-### @hello-pangea/dnd
+## @hello-pangea/dnd
 - https://github.com/hello-pangea/dnd
 
 <details><summary>Click to expand..</summary>
@@ -1388,9 +1506,9 @@ export default KanbanBoard;
 
 
 
-## Toaster
+# Toaster
 
-### Sonner
+## Sonner
 - https://sonner.emilkowal.ski/
 
 <details><summary>Click to expand..</summary>
@@ -1484,9 +1602,9 @@ export default App;
 
 
 
-## Tooltips
+# Tooltips
 
-### Radix UI - Tooltip
+## Radix UI - Tooltip
 - https://www.radix-ui.com/primitives/docs/components/tooltip
 
 <details><summary>Click to expand..</summary>
@@ -1556,3 +1674,6 @@ export default App;
 ```
 
 </details>
+
+
+<details>
