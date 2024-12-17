@@ -1046,7 +1046,165 @@ ________________________________
 
 
 
+### CSS Modules
 
+<details><summary>Click to expand..</summary>
+
+# CVA (Class Variance Authority)
+**CVA** (Class Variance Authority) ist ein **Hilfs-Tool für Tailwind CSS**, das dir ermöglicht, **dynamische und variantenreiche Klassen** einfach und sauber zu erstellen. Es hilft dabei, **CSS-Klassen zu kombinieren** und zu organisieren, vor allem in komplexeren UI-Komponenten.
+
+```typescript
+import React from "react";
+import { cva, type VariantProps } from "class-variance-authority";
+
+import styles from "./button.module.css";
+
+const button = cva(styles.base, {
+  variants: {
+    intent: {
+      primary: styles.primary,
+      secondary: styles.secondary,
+    },
+    size: {
+      small: styles.small,
+      medium: styles.medium,
+    },
+    disabled: {
+      false: styles.enabled,
+      true: styles.disabled,
+    },
+  },
+  compoundVariants: [
+    { intent: "primary", size: "medium", className: styles.primaryMedium },
+  ],
+  defaultVariants: {
+    intent: "primary",
+    size: "medium",
+    disabled: false,
+  },
+});
+
+export interface ButtonProps
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "disabled">,
+    VariantProps<typeof button> {}
+
+export const Button: React.FC<ButtonProps> = ({
+  className,
+  intent,
+  size,
+  disabled,
+  ...props
+}) => (
+  <button
+    className={button({ intent, size, disabled, className })}
+    disabled={disabled || undefined}
+    {...props}
+  />
+);
+```
+
+---
+
+## **Was macht CVA?**
+
+CVA erstellt eine **Funktion**, die je nach übergebenen Optionen oder Varianten die passenden **CSS-Klassen** zurückgibt.
+
+---
+
+## **Einfaches Beispiel**  
+
+Ohne CVA sieht eine dynamische Button-Komponente in Tailwind so aus:
+```tsx
+function Button({ variant }: { variant: 'primary' | 'secondary' }) {
+  return (
+    <button
+      className={`text-white px-4 py-2 ${
+        variant === 'primary' ? 'bg-blue-500' : 'bg-gray-500'
+      }`}
+    >
+      Button
+    </button>
+  );
+}
+```
+
+**Mit CVA**:
+```tsx
+import { cva } from 'class-variance-authority';
+
+const buttonStyles = cva('text-white px-4 py-2', {
+  variants: {
+    variant: {
+      primary: 'bg-blue-500',
+      secondary: 'bg-gray-500',
+    },
+  },
+  defaultVariants: {
+    variant: 'primary',
+  },
+});
+
+function Button({ variant }: { variant?: 'primary' | 'secondary' }) {
+  return <button className={buttonStyles({ variant })}>Button</button>;
+}
+```
+
+---
+
+## **Kurz erklärt**  
+1. **`cva` erstellt eine Konfigurationsfunktion**:  
+   - Basis-Klassen werden definiert.  
+   - Varianten und ihre spezifischen Klassen werden zugeordnet.  
+2. **Dynamische Varianten**: Du kannst leicht zwischen z. B. `primary` und `secondary` wechseln, ohne manuell Klassen zu prüfen.  
+3. **Default-Werte**: Falls keine Variante übergeben wird, greift der `defaultVariant`.
+
+---
+
+## **Warum ist das nützlich?**  
+- **Sauberer Code**: Keine verschachtelten `className`-Logiken mehr.  
+- **Einfach wartbar**: Varianten und Klassen sind an einer Stelle definiert.  
+- **Mehr Übersicht**: Besonders für Design-Systeme und größere UI-Komponenten.  
+
+**Kurz gesagt**: CVA hilft dir, saubere, variantenreiche Tailwind-Klassen zu erstellen und zu verwalten. 🚀
+  
+</details>details>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br><br>
+<br><br>
 
 
 
